@@ -1,0 +1,138 @@
+‎<!DOCTYPE html>
+‎<html lang="es">
+‎<head>
+‎<meta charset="UTF-8">
+‎<title>M&C Boutique | Tienda online</title>
+‎
+‎<style>
+‎body { font-family: Arial, sans-serif; margin: 0; }
+‎header { background: #f4c2c2; padding: 20px; text-align: center; }
+‎header h1 { margin: 0; }
+‎header p { margin: 5px 0 0 0; }
+‎.productos { display: flex; flex-wrap: wrap; gap: 20px; padding: 40px; justify-content: center; }
+‎.producto { border: 1px solid #ddd; padding: 20px; width: 300px; text-align: center; }
+‎.producto img { width: 100%; height: auto; }
+‎select, button { width: 100%; margin-top: 10px; padding: 8px; }
+‎button { background: #b23a48; color: #fff; border: none; cursor: pointer; }
+‎button:hover { background: #8e2f3b; }
+‎#carrito { background: #f9f9f9; padding: 30px; margin: 20px; text-align: center; }
+‎footer { background: #333; color: #fff; text-align: center; padding: 15px; }
+‎</style>
+‎</head>
+‎
+‎<body>
+‎
+‎<header>
+‎  <h1>M&C Boutique</h1>
+‎  <p>Moda femenina | Estilo que inspira</p>
+‎</header>
+‎
+‎<section class="productos">
+‎
+‎  <!-- Producto 1 -->
+‎  <div class="producto">
+‎    <img src="imagenes/vestido_sofia.jpg" alt="Vestido Sofía">
+‎    <h3>Vestido Sofía</h3>
+‎    <p>$45</p>
+‎    <select id="talla1">
+‎      <option value="">Selecciona talla</option>
+‎      <option>S</option><option>M</option><option>L</option>
+‎    </select>
+‎    <select id="color1">
+‎      <option value="">Selecciona color</option>
+‎      <option>Negro</option><option>Rojo</option><option>Beige</option>
+‎    </select>
+‎    <button onclick="agregarCarrito('Vestido Sofía', 45, 'talla1', 'color1')">Agregar</button>
+‎  </div>
+‎
+‎  <!-- Producto 2 -->
+‎  <div class="producto">
+‎    <img src="imagenes/blusa_emma.jpg" alt="Blusa Emma">
+‎    <h3>Blusa Emma</h3>
+‎    <p>$30</p>
+‎    <select id="talla2">
+‎      <option value="">Selecciona talla</option>
+‎      <option>S</option><option>M</option><option>L</option>
+‎    </select>
+‎    <select id="color2">
+‎      <option value="">Selecciona color</option>
+‎      <option>Blanco</option><option>Rosa</option><option>Negro</option>
+‎    </select>
+‎    <button onclick="agregarCarrito('Blusa Emma', 30, 'talla2', 'color2')">Agregar</button>
+‎  </div>
+‎
+‎  <!-- Producto 3 -->
+‎  <div class="producto">
+‎    <img src="imagenes/chaqueta_isabella.jpg" alt="Chaqueta Isabella">
+‎    <h3>Chaqueta Isabella</h3>
+‎    <p>$65</p>
+‎    <select id="talla3">
+‎      <option value="">Selecciona talla</option>
+‎      <option>S</option><option>M</option><option>L</option>
+‎    </select>
+‎    <select id="color3">
+‎      <option value="">Selecciona color</option>
+‎      <option>Negro</option><option>Beige</option><option>Gris</option>
+‎    </select>
+‎    <button onclick="agregarCarrito('Chaqueta Isabella', 65, 'talla3', 'color3')">Agregar</button>
+‎  </div>
+‎
+‎</section>
+‎
+‎<section id="carrito">
+‎  <h2>🛒 Carrito</h2>
+‎  <ul id="listaCarrito"></ul>
+‎  <p><strong>Total: $<span id="total">0</span></strong></p>
+‎  <button onclick="enviarWhatsApp()">Finalizar compra por WhatsApp</button>
+‎</section>
+‎
+‎<footer>
+‎  © 2026 M&C Boutique
+‎</footer>
+‎
+‎<script>
+‎let carrito = [];
+‎let total = 0;
+‎
+‎function agregarCarrito(nombre, precio, tallaId, colorId) {
+‎  const talla = document.getElementById(tallaId).value;
+‎  const color = document.getElementById(colorId).value;
+‎  if (talla === "" || color === "") {
+‎    alert("Selecciona talla y color 👗");
+‎    return;
+‎  }
+‎  carrito.push({ nombre, precio, talla, color });
+‎  total += precio;
+‎  mostrarCarrito();
+‎}
+‎
+‎function mostrarCarrito() {
+‎  const lista = document.getElementById("listaCarrito");
+‎  lista.innerHTML = "";
+‎  carrito.forEach(item => {
+‎    const li = document.createElement("li");
+‎    li.textContent = `${item.nombre} | Talla: ${item.talla} | Color: ${item.color} | $${item.precio}`;
+‎    lista.appendChild(li);
+‎  });
+‎  document.getElementById("total").textContent = total;
+‎}
+‎
+‎function enviarWhatsApp() {
+‎  if (carrito.length === 0) {
+‎    alert("Tu carrito está vacío 👜");
+‎    return;
+‎  }
+‎  let mensaje = "Hola, quiero realizar una compra en M&C Boutique:%0A%0A";
+‎  carrito.forEach(item => {
+‎    mensaje += `- ${item.nombre} | Talla: ${item.talla} | Color: ${item.color} | $${item.precio}%0A`;
+‎  });
+‎  mensaje += `%0A*Total: $${total}*`;
+‎
+‎  let numero = "573161205566"; // Tu WhatsApp
+‎  let url = "https://wa.me/" + numero + "?text=" + mensaje;
+‎  window.open(url, "_blank");
+‎}
+‎</script>
+‎
+‎</body>
+‎</html>
